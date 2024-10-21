@@ -6,19 +6,21 @@ const trocaImg = document.querySelector('.app__image')
 
 
 focoBtn.addEventListener('click', () => {
-    html.setAttribute('data-contexto', 'foco')
-    trocaImg.setAttribute('src', '/imagens/foco.png')
+    alteraContexto('foco')
 })
 
 curtoBtn.addEventListener('click', () => {
-    html.setAttribute('data-contexto', 'descanso-curto')
-    trocaImg.setAttribute('src', '/imagens/descanso-curto.png')
+    alteraContexto('descanso-curto')
 });
 
-longoBtn.addEventListener('click', () =>{
-    html.setAttribute('data-contexto', 'descanso-longo')
-    trocaImg.setAttribute('src', '/imagens/descanso-longo.png')
+longoBtn.addEventListener('click', () => {
+    alteraContexto('descanso-longo')
 })
+
+function alteraContexto(contexto) {
+    html.setAttribute('data-contexto', contexto)
+    trocaImg.setAttribute('src', `/imagens/${contexto}.png`)
+}
 
 
 
