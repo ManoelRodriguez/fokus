@@ -4,20 +4,29 @@ const curtoBtn = document.querySelector('.app__card-button--curto');
 const longoBtn = document.querySelector('.app__card-button--longo');
 const trocaImg = document.querySelector('.app__image')
 const titulo = document.querySelector('.app__title')
+const botoes = document.querySelectorAll('.app__card-button')
 
 focoBtn.addEventListener('click', () => {
     alteraContexto('foco')
+    focoBtn.classList.add('active')
+
 })
 
 curtoBtn.addEventListener('click', () => {
     alteraContexto('descanso-curto')
+
+    curtoBtn.classList.add('active')
 });
 
 longoBtn.addEventListener('click', () => {
     alteraContexto('descanso-longo')
+    longoBtn.classList.add('active')
 })
 
 function alteraContexto(contexto) {
+    botoes.forEach(function (contexto) {
+        contexto.classList.remove('active')
+    })
     html.setAttribute('data-contexto', contexto)
     trocaImg.setAttribute('src', `/imagens/${contexto}.png`)
     switch (contexto) {
