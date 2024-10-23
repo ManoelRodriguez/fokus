@@ -1,11 +1,21 @@
-const html = document.querySelector('html');
-const focoBtn = document.querySelector('.app__card-button--foco');
-const curtoBtn = document.querySelector('.app__card-button--curto');
-const longoBtn = document.querySelector('.app__card-button--longo');
+const html = document.querySelector('html')
+const focoBtn = document.querySelector('.app__card-button--foco')
+const curtoBtn = document.querySelector('.app__card-button--curto')
+const longoBtn = document.querySelector('.app__card-button--longo')
 const trocaImg = document.querySelector('.app__image')
 const titulo = document.querySelector('.app__title')
 const botoes = document.querySelectorAll('.app__card-button')
+const musicaFocoInput = document.querySelector('#alternar-musica')
+const musica = new Audio('/sons/luna-rise-part-one.mp3')
 
+musica.loop = true //a música irá tocar constantemente
+musicaFocoInput.addEventListener('change', () => {
+    if (musica.paused) {    //paused é nativo do objeto Audio
+        musica.play()
+    } else {
+        musica.pause()
+    }
+})
 focoBtn.addEventListener('click', () => {
     alteraContexto('foco')
     focoBtn.classList.add('active')
@@ -14,7 +24,6 @@ focoBtn.addEventListener('click', () => {
 
 curtoBtn.addEventListener('click', () => {
     alteraContexto('descanso-curto')
-
     curtoBtn.classList.add('active')
 });
 
