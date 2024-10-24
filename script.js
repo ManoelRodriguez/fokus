@@ -5,8 +5,15 @@ const longoBtn = document.querySelector('.app__card-button--longo')
 const trocaImg = document.querySelector('.app__image')
 const titulo = document.querySelector('.app__title')
 const botoes = document.querySelectorAll('.app__card-button')
+const startPauseBt = document.querySelector('#start-pause')
 const musicaFocoInput = document.querySelector('#alternar-musica')
 const musica = new Audio('/sons/luna-rise-part-one.mp3')
+const txtSpan = document.querySelector('span')
+const imgPlayPause = document.querySelector('.app__card-primary-butto-icon')
+const musicaPlay = new Audio('/sons/play.wav')
+const musicaPause = new Audio('/sons/pause.mp3')
+let tempoDecorridoEmSegundos = 5
+let intervaloId = null
 
 musica.loop = true //a música irá tocar constantemente
 musicaFocoInput.addEventListener('change', () => {
@@ -30,6 +37,18 @@ curtoBtn.addEventListener('click', () => {
 longoBtn.addEventListener('click', () => {
     alteraContexto('descanso-longo')
     longoBtn.classList.add('active')
+})
+
+startPauseBt.addEventListener('click', () => {
+    if (txtSpan.innerText === "Começar") {
+        txtSpan.innerHTML = `Pausar`
+        imgPlayPause.setAttribute('src', `imagens/pause.png`)
+        musicaPlay.play()
+    }else{
+        txtSpan.innerHTML = `Começar`
+        imgPlayPause.setAttribute('src', `imagens/play_arrow.png`)
+        musicaPause.play()
+    }
 })
 
 function alteraContexto(contexto) {
@@ -61,10 +80,17 @@ function alteraContexto(contexto) {
     }
 }
 
+/* const contagemRegressiva = () => {
+    if(tempoDecorridoEmSegundos <= 0){
+        alert('Tempo finalizado')
+        return
+    }
+    tempoDecorridoEmSegundos -= 1
+    console.log('Temporizador: ' + tempoDecorridoEmSegundos)
+} */
 
+startPauseBt.addEventListener('click', iniciar)
 
-
-/* ------------EXERCICIOS------------ */
-
-const timerContainer = document.querySelector('.app__card-timer')
-const trocaFrase = document.querySelector('.app__title')
+function iniciar() {
+    intervaloId = setInterval(contagemRegressiva, 1000)
+}
