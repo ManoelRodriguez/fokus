@@ -28,31 +28,25 @@ musicaFocoInput.addEventListener('change', () => {
     }
 })
 focoBtn.addEventListener('click', () => {
+    tempoDecorridoEmSegundos = 1500
+    mostrarTempo()
     alteraContexto('foco')
     focoBtn.classList.add('active')
 
 })
 
 curtoBtn.addEventListener('click', () => {
+    tempoDecorridoEmSegundos = 300
+    mostrarTempo()
     alteraContexto('descanso-curto')
     curtoBtn.classList.add('active')
 });
 
 longoBtn.addEventListener('click', () => {
+    tempoDecorridoEmSegundos = 900
+    mostrarTempo()
     alteraContexto('descanso-longo')
     longoBtn.classList.add('active')
-})
-
-startPauseBt.addEventListener('click', () => {
-    if (txtSpan.innerText === "Começar") {
-        txtSpan.innerHTML = `Pausar`
-        imgPlayPause.setAttribute('src', `imagens/pause.png`)
-        audioPlay.play()
-    } else {
-        txtSpan.innerHTML = `Começar`
-        imgPlayPause.setAttribute('src', `imagens/play_arrow.png`)
-        audioPause.play()
-    }
 })
 
 function alteraContexto(contexto) {
@@ -98,6 +92,15 @@ const contagemRegressiva = () => {
 startPauseBt.addEventListener('click', iniciarOuPausar)
 
 function iniciarOuPausar() {
+    if (txtSpan.innerText === "Começar") {
+        txtSpan.innerHTML = `Pausar`
+        imgPlayPause.setAttribute('src', `imagens/pause.png`)
+        audioPlay.play()
+    } else {
+        txtSpan.innerHTML = `Começar`
+        imgPlayPause.setAttribute('src', `imagens/play_arrow.png`)
+        audioPause.play()
+    }
     if (intervaloId) {
         zerar()
         return
@@ -106,8 +109,9 @@ function iniciarOuPausar() {
 }
 
 function mostrarTempo() {
-    const tempo = tempoDecorridoEmSegundos
-    tempoNaTela.innerHTML = `${tempo}`
+    const tempo = new Date(tempoDecorridoEmSegundos * 1000)
+    const tempoFormatado = tempo.toLocaleTimeString('pt-br', { minute: '2-digit', second: '2-digit' })
+    tempoNaTela.innerHTML = `${tempoFormatado}`
 }
 
 function zerar() {
