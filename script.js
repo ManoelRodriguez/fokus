@@ -7,12 +7,16 @@ const titulo = document.querySelector('.app__title')
 const botoes = document.querySelectorAll('.app__card-button')
 const startPauseBt = document.querySelector('#start-pause')
 const musicaFocoInput = document.querySelector('#alternar-musica')
-const musica = new Audio('/sons/luna-rise-part-one.mp3')
 const txtSpan = document.querySelector('span')
 const imgPlayPause = document.querySelector('.app__card-primary-butto-icon')
-const musicaPlay = new Audio('/sons/play.wav')
-const musicaPause = new Audio('/sons/pause.mp3')
-let tempoDecorridoEmSegundos = 5
+const tempoNaTela = document.querySelector('#timer')
+
+const musica = new Audio('/sons/luna-rise-part-one.mp3')
+const audioPlay = new Audio('/sons/play.wav')
+const audioPause = new Audio('/sons/pause.mp3')
+const audioZerado = new Audio('/sons/beep.mp3')
+
+let tempoDecorridoEmSegundos = 1500
 let intervaloId = null
 
 musica.loop = true //a música irá tocar constantemente
@@ -43,11 +47,11 @@ startPauseBt.addEventListener('click', () => {
     if (txtSpan.innerText === "Começar") {
         txtSpan.innerHTML = `Pausar`
         imgPlayPause.setAttribute('src', `imagens/pause.png`)
-        musicaPlay.play()
-    }else{
+        audioPlay.play()
+    } else {
         txtSpan.innerHTML = `Começar`
         imgPlayPause.setAttribute('src', `imagens/play_arrow.png`)
-        musicaPause.play()
+        audioPause.play()
     }
 })
 
@@ -80,17 +84,35 @@ function alteraContexto(contexto) {
     }
 }
 
-/* const contagemRegressiva = () => {
-    if(tempoDecorridoEmSegundos <= 0){
+const contagemRegressiva = () => {
+    if (tempoDecorridoEmSegundos <= 0) {
+        //audioZerado.play()
         alert('Tempo finalizado')
+        zerar()
         return
     }
     tempoDecorridoEmSegundos -= 1
-    console.log('Temporizador: ' + tempoDecorridoEmSegundos)
-} */
+    mostrarTempo()
+}
 
-startPauseBt.addEventListener('click', iniciar)
+startPauseBt.addEventListener('click', iniciarOuPausar)
 
-function iniciar() {
+function iniciarOuPausar() {
+    if (intervaloId) {
+        zerar()
+        return
+    }
     intervaloId = setInterval(contagemRegressiva, 1000)
 }
+
+function mostrarTempo() {
+    const tempo = tempoDecorridoEmSegundos
+    tempoNaTela.innerHTML = `${tempo}`
+}
+
+function zerar() {
+    clearInterval(intervaloId)
+    intervaloId = null
+}
+
+mostrarTempo()
